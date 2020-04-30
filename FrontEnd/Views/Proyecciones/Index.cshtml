@@ -1,0 +1,29 @@
+﻿@model IEnumerable<FrontEnd.Models.ProyeccionesViewModel>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Cartelera</h2>
+
+<div class="container wow fadeInUp">
+    <div class="row" id="portfolio-wrapper">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 portfolio-item filter-app">
+            
+                <img width="200" src="~/Images/Pelicula_flash.png" alt="">
+                <div class="details">
+                    <h4>@item.Pelicula.nombre_pelicula</h4>
+                    <h3>@item.Pelicula.duracion_pelicula</h3>
+
+                    @Html.ActionLink("Ver detalles", "Detalles", null, new { id = item.id_pelicula }, new { @class = "btn btn-info" })
+                    @Html.HiddenFor(id_sala => item.id_sala)
+                </div>
+            
+             </div>   
+        }
+    </div>
+</div>

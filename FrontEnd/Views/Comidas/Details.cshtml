@@ -1,0 +1,96 @@
+﻿@model FrontEnd.Models.ComidasViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles de la comida</h2>
+<script type="text/javascript">
+    var producto = {
+        id_comida:"",
+        nombre: "",
+        precio: "",
+        cantidad: "",
+        imagen_comida: ""
+    };
+    var urlComprar ='@Url.Action("Compra_Final", "Comidas")';
+
+    $(document).ready(function () {
+          
+        $("#enviar").click(function () {
+
+            producto.id_comida= '@Model.id_comida',
+            producto.nombre= '@Model.nombre',
+            producto.precio= '@Model.precio',
+            producto. cantidad= '@Model.cantidad',
+            producto.imagen_comida= '@Model.imagen_comida'
+              $.ajax({
+               url: urlComprar,
+               data: JSON.stringify(producto),
+               type: 'POST',
+               dataType:"json",
+               contentType: 'application/json',
+                 success: function (response)
+                 {
+                   alert("Datos enviados" + response); 
+                  
+                  location.href = '@Url.Action("About","Comidas")';
+                 }, error: function (response) {
+                   
+                   console.log("Error" + response);
+                 } 
+
+            });        
+        });
+    });
+
+</script>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_comida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_comida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen_comida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imagen_comida)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button id="enviar" class="btn btn-primary">Enviar datos</button>
+    @Html.ActionLink("Regresar", "Index")
+</p>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FrontEnd.Models.ComidasViewModel>
+@{
+    ViewBag.Title = "Index";
+
+}
+<style type="text/css">
+
+    .table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table td, .table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .table tr:hover {
+            background-color: #ddd;
+        }
+
+        .table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #2b2929;
+            color: white;
+        }
+</style>
+<p>
+    @if (User.IsInRole("Administrador"))
+    {
+        <a href="@Url.Action("Create", "Comidas")" class="btn btn-primary btn-sm">
+            <ion-icon size="small" name="add"></ion-icon>
+            <medium>Agregar</medium>
+        </a>
+    }
+</p>
+<div class="container wow fadeInUp">
+    <div class="row" id="portfolio-wrapper">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 portfolio-item filter-app">
+                <img width="200" src="~/Images/combo.jpg" alt="">
+                <div class="details">
+
+                    <h3>@item.nombre</h3>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <a href="@Url.Action("Edit", "Comidas", new { id = item.id_comida })" class="btn btn-primary btn-sm">
+                            <ion-icon size="small" name="create"></ion-icon>
+                            <p><small>Editar</small></p>
+                        </a>
+                        <a href="@Url.Action("Details", "Comidas", new { id = item.id_comida })" class="btn btn-primary btn-sm">
+                            <ion-icon class="" size="small" name="list-box"></ion-icon>
+                            <p><small>Detalles</small></p>
+                        </a>
+                        <a href="@Url.Action("Delete", "Comidas", new { id = item.id_comida })" class="btn btn-primary btn-sm">
+                            <ion-icon size="small" name="trash"></ion-icon>
+                            <p><small>Eliminar</small></p>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Details", "Comidas", new { id = item.id_comida })" class="btn btn-primary btn-sm">
+                            <ion-icon class="" size="small" name="list-box"></ion-icon>
+                            <p><small>Detalles</small></p>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
