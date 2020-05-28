@@ -1,0 +1,167 @@
+﻿@model FrontEnd.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Edit";
+   
+}
+
+    <script>
+        var rol = [];
+        var temporal;
+        var rolName;
+        var urlRoles = '@Url.Action("ConsultaRoles", "Usuario")';
+        $(document).ready(function () {
+
+            ROL();
+            rol = [$(".id_rol").val()]
+            $.ajax({
+                url: urlRoles,
+                data: JSON.stringify(rol),
+                type: 'POST',
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (response) {
+
+
+
+                    temporal = JSON.stringify(response);
+                    rolName = JSON.parse(temporal);
+                    $("#rol_name").val(rolName.RoleName);
+
+
+                }, error: function (response) {
+
+                    console.log("Error" + response);
+                }
+
+            });
+
+        });
+
+
+        function ROL () {
+            $(".id_rol").click(function () {
+                rol = [$(".id_rol").val()]
+             $.ajax({
+               url: urlRoles,
+               data: JSON.stringify(rol),
+               type: 'POST',
+               dataType:"json",
+               contentType: 'application/json',
+               success: function (response)
+               {
+
+
+
+                   temporal = JSON.stringify(response);
+                   rolName = JSON.parse(temporal);
+                   $("#rol_name").val(rolName.RoleName);
+                   
+                  
+               }, error: function (response) {
+
+                   console.log("Error" + response);
+               }
+
+            });
+
+        });
+    }
+    </script>
+
+<h2>Editar un usuario</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.UserViewModelId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_rol, htmlAttributes: new { @class = "control-label col-md-2  " })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.id_rol, new { htmlAttributes = new { @class = "form-control id_rol " } })
+            @Html.ValidationMessageFor(model => model.id_rol, "", new { @class = "text-danger" })
+        
+            <div class="col-md-offset-2 col-md-10">
+                <input id="rol_name" disabled />
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Contrasena, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 disabled">
+            @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control"  } })
+            @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tarjeta, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tarjeta, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.tarjeta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

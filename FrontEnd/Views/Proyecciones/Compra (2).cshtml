@@ -1,0 +1,186 @@
+﻿@model FrontEnd.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Compra";
+}
+
+<h2>Compra</h2>
+
+<script type="text/javascript">
+
+    var usuario = {
+        UserName: "",
+        nombre: "",
+        Password: "",
+        mail: "",
+        phone: "",
+        apellidos: "",
+        card: ""
+    };
+    var urlComprar ='@Url.Action("Datos_Usuario", "Comidas")';
+
+
+    $(document).ready(function () {
+          
+        $("#si").click(function () {
+            usuario.UserName = $(".nombre").val();
+            usuario.apellidos = $(".apellidos").val();
+            usuario.nombre = $(".nombre").val();
+            usuario.Password = "";
+            usuario.phone = $(".phone").val();
+            usuario.card = $(".card").val();
+            usuario.mail = $(".mail").val();
+           
+              $.ajax({
+               url: urlComprar,
+               data: JSON.stringify(usuario),
+               type: 'POST',
+               dataType:"json",
+               contentType: 'application/json',
+                 success: function (response)
+                 {
+                   alert("Datos enviados" + response); 
+                  
+                   location.href = '@Url.Action("Index","Comidas")';
+                 }, error: function (response) {
+                   
+                   console.log("Error" + response);
+                 } 
+
+            });
+
+           
+        });
+
+       
+    });
+
+
+   
+
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control nombre" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control mail" } })
+            @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control phone" } })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.apellidos, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control apellidos" } })
+            @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.tarjeta, htmlAttributes: new { @class = "control-label col-md-2 " })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.tarjeta, new { htmlAttributes = new { @class = "form-control card" } })
+            @Html.ValidationMessageFor(model => model.tarjeta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <text class="control-label col-md-2">Fecha de expiracion</text>
+    </div>
+    <div class="form-group float-left">
+
+
+        <select class="custom-select" required>
+            <option value="">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+        </select>
+
+
+    </div>
+
+    <div class="form-group">
+        <select class="custom-select" required>
+            <option value="">Seleccione un año</option>
+            <option value="1">2020</option>
+            <option value="2">2021</option>
+            <option value="3">2022</option>
+            <option value="4">2023</option>
+            <option value="5">2024</option>
+            <option value="6">2025</option>
+            <option value="8">2026</option>
+            <option value="9">2027</option>
+            <option value="10">2028</option>
+            <option value="11">2029</option>
+            <option value="12">2030</option>
+            <option value="13">2031</option>
+        </select>
+
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+       Finalizar Compra
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Desea agregar una comida</h5>
+                </div>
+              
+                <div class="modal-footer">
+                    <button type="submit" id="no" value="false" class="btn btn-secondary">No</button>
+                    <button type="button" id="si" value="true" class="btn btn-primary">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

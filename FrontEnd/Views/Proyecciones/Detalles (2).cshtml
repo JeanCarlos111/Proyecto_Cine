@@ -1,0 +1,245 @@
+﻿@model FrontEnd.Models.ProyeccionesViewModel
+
+@{
+    ViewBag.Title = "Detalles";
+    int limite_asientos = 10;
+    int cantidad_filas = 0;
+    cantidad_filas = (int) Model.Sala.cantidad_asientos / limite_asientos;
+    string valor_fila = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
+}
+
+<script>
+    var cantidad_de_asientos;
+    var contador = 0;
+    var compra ={
+       
+        sala:'@Model.id_sala', 
+
+        numero_asiento:[],
+
+        cantidad_asientos:"",
+        precio_entradas:"" 
+    };
+    var id_sala = ['@Model.id_sala'];
+    var urlComprar = '@Url.Action("Entradas","Proyecciones")';
+    var urlOcupados ='@Url.Action("ConsultaReservas", "Proyecciones")';
+    var asientos_reservados;
+    var temporal;
+
+    $(document).ready(function () {
+        Marcar(contador);
+        Comprar();
+        MarcarAsientoReservado();
+        console.log("==============================================");
+        console.log("   DOC.REAY ");
+        console.log("    ");
+        console.log("    var: cantidad_de_asientos= " + cantidad_de_asientos);
+        console.log("    var: contador= " + contador);
+        console.log("    var: asientos_id= " + compra.numero_asiento);
+        console.log("    ");
+        console.log("==============================================");
+
+        $("#cerrar").click(function () {
+            location.reload();
+        });
+    });
+
+
+    /*Funcion para marcar asiento reservado*/
+    function MarcarAsientoReservado()
+    {
+        $("#boletos").click(function () {
+         $.ajax({
+             url: urlOcupados,
+             data: JSON.stringify(id_sala),
+               type: 'POST',
+               dataType:"json",
+               contentType: 'application/json',
+               success: function (response)
+               {
+                   asientos_reservados = JSON.stringify(response);
+                   temporal=JSON.parse(asientos_reservados);
+                   
+
+                   $(".imagen").each(function () {
+                       var id = $(this).attr("id")
+                       for (var i = 0; i < temporal.length; i++) {
+                           if (id == temporal[i].numero_asiento)
+                           {
+                              $(this).css({ 'color': 'red', 'font-size': '1.3em', 'background': 'red' });
+                              $(this).addClass('reservada');
+                           }
+                           
+                       }
+                   });
+                    }, error: function (response) {
+                   
+                   console.log("Error" + response);
+               } 
+
+            });
+        });
+
+    }
+
+   /*Funcion para marcar asiento*/
+    function Marcar(contador)
+    {
+        $("#boletos").click(function ()
+        {
+            //Asignacion de la cantidad de boletos a comprar
+            cantidad_de_asientos = $("#cantidad").val();
+
+            $(".imagen").click(function () {
+                if (contador != cantidad_de_asientos && !$(this).is(".marcada") && !$(this).is(".reservada"))
+                {
+                    $(this).css({ 'color': 'green', 'font-size': '1.3em', 'background': 'green' });
+                    $(this).addClass('marcada');
+
+                   // asientos_id.push($(this).attr("id"));
+                    compra.numero_asiento.push($(this).attr("id"));
+                    contador++;
+                    console.log("==============================================");
+                    console.log("   FUNC: Marcar ");
+                    console.log("    ");
+                    console.log("    var: cantidad_de_asientos= " + cantidad_de_asientos);
+                    console.log("    var: contador= " + contador);
+                    console.log("    var: asientos_id= " + compra.numero_asiento);
+                    console.log("    ");
+                    console.log("==============================================");
+
+                } else {
+
+                    if ($(this).is(".marcada") && 0 < contador)
+                    {
+
+                        $(this).css({ 'color': 'white', 'font-size': '1.3em', 'background': 'white' });
+                        $(this).removeClass("marcada");
+
+                        for (var i = 0; i < compra.numero_asiento.length; i++)
+                        {
+                            if (compra.numero_asiento[i] == $(this).attr("id"))
+                            {
+                                compra.numero_asiento.splice(i, 1);
+                            }
+                        }
+
+                        contador--;
+                        console.log("==============================================");
+                        console.log("   FUNC: Desmarcar ");
+                        console.log("    ");
+                        console.log("    var: cantidad_de_asientos= " + cantidad_de_asientos);
+                        console.log("    var: contador= " + contador);
+                        console.log("    var: asientos_id= " + compra.numero_asiento);
+                        console.log("    ");
+                        console.log("==============================================");
+                    }
+                    console.log("    var: contador= " + contador);
+                }
+               console.log("La cantidad de asientos seleccionados es: " + contador);
+            });
+        });
+    }
+
+    function AsientosVendidos() {
+
+    }
+
+    function Comprar() {
+        $("#Comprar").click(function () {
+            compra.cantidad_asientos = cantidad_de_asientos;
+            compra.precio_entradas = $("#valor_entrada").val();
+           $.ajax({
+               url: urlComprar,
+               data: JSON.stringify(compra),
+               type: 'POST',
+               dataType:"json",
+               contentType: 'application/json',
+               success: function (response)
+               {
+                   alert("Datos enviados" + response); 
+                  
+                   location.href = '@Url.Action("Compra","Proyecciones")';
+               }, error: function (response) {
+                   
+                   console.log("Error" + response);
+               } 
+
+            });
+           
+        });
+    }
+</script>
+
+<div>
+    <h4>Detalles de Peliculas</h4>
+    <hr />
+    <div class="card w-50 h-50 text-center mx-auto border bg-dark">
+        <div class="card-header">
+            <h3 class="text-white">Detalles Pelicula</h3>
+        </div>
+        <img src="@Model.Pelicula.imagen_pelicula" class="card-img-top mx-auto d-block" style="width:550px ;height:250px;" >
+        <div class="card-body text-center">
+            <h3 class="card-title text-white"> @Model.Pelicula.nombre_pelicula</h3>
+
+            <p class="card-text text-white">Sala: @Model.Sala.sala1</p>
+
+            <p class="card-text text-white">Duracion: @Model.Pelicula.duracion_pelicula</p>
+
+            <p class="card-text text-white">Clasificacion: @Model.Clasificacion.tipo_clasificacion</p>
+
+            <p class="card-text text-white">Formato: @Model.Formato.formato1</p>
+            <input disabled type="text" class="card-text disabled" id="valor_entrada" value="2750" placeholder="Valor entrada: 2750"/>
+            <input class="card-text" id="cantidad" type="number" max="10" min="1" value="1" />
+        </div>
+        <div class="card-footer">
+        </div>
+        <br />
+        <!-- Button para lanzar el modal -->
+        <button id="boletos" type="button" class="btn btn-primary  btn-lg" data-toggle="modal" data-target="#exampleModal">
+            Seleccionar asientos
+        </button>
+        <button type="button" class="btn btn-default  btn-lg">@Html.ActionLink("Regresar", "Index")</button>
+
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Seleccione su asiento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+               @for (int i = 0; i <= cantidad_filas; i++)
+                {
+                    char[] caracteres = valor_fila.ToCharArray();
+                <div class="col-lg-x text-center " style="background-color:whitesmoke;">
+                    <br />
+                    
+                    @for (int j = 1; j <= 10; j++)
+                         {
+                          <img class="imagen img-fluid d-inline" id="@(caracteres[i+1] + "-" + @j)" src="~/Images/butaca-del-cine.png" />
+                         }
+                   
+                </div>
+                }
+
+                <h2 style="text-align:center;">PANTALLA</h2>
+
+                <div class="modal-footer">
+                    <button id="cerrar" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="Comprar" class="btn btn-primary">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

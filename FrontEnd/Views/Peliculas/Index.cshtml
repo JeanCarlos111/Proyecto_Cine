@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FrontEnd.Models.PeliculaViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+
+    <a href="@Url.Action("Create", "Peliculas")" class="btn btn-primary btn-sm">
+        <ion-icon size="small" name="add"></ion-icon>
+        <medium>Agregar</medium>
+    </a>
+
+</p>
+<div class="container wow fadeInUp">
+    <div class="row" id="portfolio-wrapper">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3  border bg-dark text-white">
+                <img class="border mx-auto d-block " src="@item.imagen_pelicula" style="width:240px ;height:155px;">
+                <div class="details text-center">
+
+                    <h3 class="text-center text-white">@item.nombre_pelicula</h3>
+
+                    <a href="@Url.Action("Edit", "Peliculas", new { id = item.id_pelicula})" class="btn btn-primary btn-sm ">
+                        <p><small> <ion-icon class="border" size="small" name="create"></ion-icon> Editar</small></p>
+                    </a>
+                    <a href="@Url.Action("Delete", "Peliculas", new { id = item.id_pelicula})" class="btn btn-primary btn-sm">
+                        <p><small> <ion-icon size="small" name="trash" class="border"></ion-icon> Eliminar</small></p>
+                    </a>
+
+                    <a href="@Url.Action("Details", "Peliculas", new { id = item.id_pelicula})" class="btn btn-primary btn-sm ">
+                        <p><small><ion-icon class="border" size="small" name="list-box"></ion-icon> Detalles</small></p>
+                    </a>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

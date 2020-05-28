@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB09F175-E358-4872-A873-9C4395E48160}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BackEnd</RootNamespace>
+    <AssemblyName>BackEnd</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\source\repos\Template\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\source\repos\Template\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DAL\AsientoDALImpl.cs" />
+    <Compile Include="DAL\ClasificacionDALImpl.cs" />
+    <Compile Include="DAL\CompraDALImpl.cs" />
+    <Compile Include="DAL\FormatoDALImpl.cs" />
+    <Compile Include="DAL\GeneroDALImpl.cs" />
+    <Compile Include="DAL\IAsientoDAL.cs" />
+    <Compile Include="DAL\IClasificacionDAL.cs" />
+    <Compile Include="DAL\ICompraDAL.cs" />
+    <Compile Include="DAL\IFormatoDAL.cs" />
+    <Compile Include="DAL\IGeneroDAL.cs" />
+    <Compile Include="DAL\IIntermediaDAL.cs" />
+    <Compile Include="DAL\IntermediaDALImpl.cs" />
+    <Compile Include="DAL\IPeliculaDAL.cs" />
+    <Compile Include="DAL\IPrecioDAL.cs" />
+    <Compile Include="DAL\IProductoDAL.cs" />
+    <Compile Include="DAL\PrecioDALImpl.cs" />
+    <Compile Include="DAL\ProyeccionDALImpl.cs" />
+    <Compile Include="DAL\IRolDAL.cs" />
+    <Compile Include="DAL\ISalaDAL.cs" />
+    <Compile Include="DAL\IUsuarioDAL.cs" />
+    <Compile Include="DAL\PeliculaDALImpl.cs" />
+    <Compile Include="DAL\ProductoDALImpl.cs" />
+    <Compile Include="DAL\IProyeccionDAL.cs" />
+    <Compile Include="DAL\RolDALImpl.cs" />
+    <Compile Include="DAL\SalaDALImpl.cs" />
+    <Compile Include="DAL\UsuarioDALImpl.cs" />
+    <Compile Include="Entities\Asiento.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Cine.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cine.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Cine.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Cine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cine.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Clasificacion.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Compra.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Formato.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Genero.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Intermedia.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Pelicula.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Precio.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Producto.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Proyeccion.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Roles.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Sala.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sysdiagrams.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Users.cs">
+      <DependentUpon>Cine.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Entities\Cine.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Cine.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\Cine.edmx.diagram">
+      <DependentUpon>Cine.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entities\Cine.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cine.edmx</DependentUpon>
+      <LastGenOutput>Cine.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\Cine.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Cine.edmx</DependentUpon>
+      <LastGenOutput>Cine.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

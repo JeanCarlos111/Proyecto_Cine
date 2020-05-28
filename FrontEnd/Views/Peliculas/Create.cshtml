@@ -1,0 +1,196 @@
+﻿@model FrontEnd.Models.PeliculaViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+<script>
+
+
+    var clasificacion = [];
+    var formato = [];
+    var genero = [];
+    var temporal1;
+    var temporal2;
+    var temporal3;
+    var clasifiactionName;
+    var formatoName;
+    var generoName;
+    var urlClasificacion = '@Url.Action("ConsultaClasificacion", "Peliculas")';
+    var urlGenero = '@Url.Action("ConsultaGenero", "Peliculas")';
+    var urlFormato = '@Url.Action("ConsultaFormato", "Peliculas")';
+
+    $(document).ready(function () {
+
+        clasificacion();
+        genero();
+        formato();
+  function clasificacion () {
+    $(".id_clasificacion").click(function () {
+    clasificacion = [$(".id_clasificacion").val()]
+    $.ajax({
+    url: urlClasificacion,
+    data: JSON.stringify(clasificacion),
+    type: 'POST',
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (response) {
+
+
+
+    temporal1 = JSON.stringify(response);
+    clasificacionName = JSON.parse(temporal1);
+    $("#clasificacion_name").val(clasificacionName.tipo_clasificacion);
+    console.log("ID Clasificacion" + clasificacion);
+
+    }, error: function (response) {
+
+    console.log("Error" + response);
+    }
+
+    });
+
+    });
+    }
+
+    function formato() {
+    $(".id_formato").click(function () {
+    formato = [$(".id_formato").val()]
+    $.ajax({
+    url: urlFormato,
+    data: JSON.stringify(formato),
+    type: 'POST',
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (response) {
+
+
+
+    temporal2 = JSON.stringify(response);
+    formatoName = JSON.parse(temporal2);
+    $("#formato_name").val(formatoName.formato1);
+    console.log("ID FORMATO" + formatoName);
+
+    }, error: function (response) {
+
+    console.log("Error" + response);
+    }
+
+    });
+
+    });
+    }
+
+    function genero() {
+    $(".id_genero").click(function () {
+    genero = [$(".id_genero").val()]
+    $.ajax({
+    url: urlGenero,
+    data: JSON.stringify(genero),
+    type: 'POST',
+    dataType: "json",
+    contentType: 'application/json',
+    success: function (response) {
+
+
+
+    temporal3 = JSON.stringify(response);
+    generoName = JSON.parse(temporal3);
+    $("#genero_name").val(generoName.genero1);
+    console.log("ID GENERO" + generoName);
+
+    }, error: function (response) {
+
+    console.log("Error" + response);
+    }
+
+    });
+
+    });
+    }
+    });
+    </script>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>PeliculaViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.id_clasifacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id_clasifacion, new { htmlAttributes = new { @class = "form-control id_clasificacion" } })
+                @Html.ValidationMessageFor(model => model.id_clasifacion, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-offset-2 col-md-10">
+                <input id="clasificacion_name" disabled />
+            </div>
+        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nombre_pelicula, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nombre_pelicula, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre_pelicula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.duracion_pelicula, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.duracion_pelicula, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.duracion_pelicula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.id_genero, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_genero, new { htmlAttributes = new { @class = "form-control id_genero" } })
+                    @Html.ValidationMessageFor(model => model.id_genero, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="genero_name" disabled />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.imagen_pelicula, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.imagen_pelicula, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.imagen_pelicula, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.id_formato, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_formato, new { htmlAttributes = new { @class = "form-control id_formato" } })
+                    @Html.ValidationMessageFor(model => model.id_formato, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="formato_name" disabled />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Golden Village Bienvenido</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="~/Scripts/bootstrap.js" />
+    <link href="~/Scripts/bootstrap.min.js" />
+    <link href="~/Content/Estilos.css" rel="stylesheet" />
+
+    <style type="text/css">
+        body {
+            background-color: snow;
+        }
+
+        #menu {
+            margin-top: -50px;
+        }
+     
+    </style>
+
+</head>
+<body>
+
+    <nav id="menu" class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+        @Html.ActionLink("Golden Village", "Index", "Home", null, new { @class = "navbar-brand text-primary" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Cartelera", "Index", "Proyecciones", null, new { @class = "text-primary nav-link" })
+                </li>
+                <li class="nav-item">
+                <li>
+                    @Html.ActionLink("Area de Comida", "Index", "Productos", null, new { @class = "text-primary nav-link" })
+                </li>
+                <li>
+                    @Html.ActionLink("Area de Usuarios", "Index", "Usuario", null, new { @class = "text-primary nav-link" })
+                </li>
+                <li>
+                    @Html.ActionLink("Area de Peliculas", "Index", "Peliculas", null, new { @class = "text-primary nav-link" })
+                </li>
+            </ul>
+          
+            <form class="form-inline my-2 my-lg-0">
+                
+                    <ul class="nav navbar-nav navbar-right">
+                     <li class="navbar-text">¡Hola, @User.Identity.Name!</li>
+                     <li>@Html.ActionLink("Cerrar Sesión", "Logout", "Login", new {@class= "text-primary nav-link" })</li>
+                    </ul>
+                
+            </form>
+        </div>
+    </nav>
+    <br />
+    <div id="resultado"class="container body-content">
+        @RenderBody()
+        <hr />
+
+    </div>
+   
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 text-left text-dark">
+                    <h6 class="text-muted lead">CONTACTO:</h6>
+                    <h6 class="text-muted lead">
+                        Carrera 8h No. 166-71 Local 2<br>
+                        Santa Cruz de la Ronda.<br>
+                        Teléfonos: 3115988953 – 3112641818.<br>
+                    </h6>
+                </div>
+
+                <div class="col-xs-12 col-md-6 text-right">
+                    <h6 class="text-muted lead">ENCUENTRANOS EN LAS REDES</h6>
+                    <div class="redes-footer">
+                        <a target="_blank" href="https://es-la.facebook.com/gvmovieclub/"><ion-icon name="logo-facebook">Facebook</ion-icon></a>
+                        <a target="_blank" href="https://twitter.com/gvmovieclub?lang=es"><ion-icon name="logo-instagram">Instagram</ion-icon></a>
+                        <a target="_blank" href="https://www.instagram.com/goldenvillagepictures/"><ion-icon name="logo-twitter">Twitter</ion-icon></a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-12 text-right ">
+                    <p  class="text-muted small ">Golden Village, Innovando la experiencia del cine desde el @@2016.<br> Todos los derechos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+       
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
